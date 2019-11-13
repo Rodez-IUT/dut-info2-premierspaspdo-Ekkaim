@@ -10,9 +10,20 @@
 		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 	</head>
 	<body>
+		<form method="post">
+			<label>Start with letter : </label> 
+			<input type="text" id="letter" name="letter" required maxlength="1" size="10">
+			<label> and status is : </label> 	
+			<select name="status">
+				<option value="Active account" selected>Active account</option>
+				<option value="Waiting for account validation">Waiting for account validation</option>
+			</select>
+			<input type="submit" value="OK">
+		</form>
+				
 		<?php 
-			$status='Active account';
-			$lettre='e';
+			$status= $_POST['status'];
+			$lettre= $_POST['letter'];
 			
 			$host='localhost';
 			$db='my_activities';
@@ -29,29 +40,41 @@
 			}catch(PDOException$e){
 				throw new PDOException($e->getMessage(),(int)$e->getCode());
 			}
-			$stmt = $pdo->query('SELECT users.id, users.username, users.email, status.name 
-								FROM users 
-								JOIN status 
-								ON users.status_id=status.id 
-								WHERE status.name="'.$status.'" 
-								AND users.username LIKE "e%"
-								ORDER BY username');
-			echo "<div class=\"container\">";
-				echo "<div class=\"row\">";
-					echo "<div class=\"col-lg-1\"><strong> ID </strong></div>";
-					echo "<div class=\"col-lg-3\"><strong> Username </strong></div>";
-					echo "<div class=\"col-lg-5\"><strong> Email </strong></div>";
-					echo "<div class=\"col-lg-3\"><strong> Status </strong></div>";
-				echo "</div>";
-				while($row = $stmt->fetch()){
+			if (isset($lettre, $status)) {
+				$stmt = $pdo->query('SELECT users.id, users.username, users.email, status.name 
+									FROM users 
+									JOIN status 
+									ON users.status_id=status.id 
+									WHERE status.name="'.$status.'" 
+									AND users.username LIKE "'.$lettre.'%"
+									ORDER BY username');
+								
+				echo "<div class=\"container\">";
 					echo "<div class=\"row\">";
-						echo "<div class=\"col-lg-1\">".$row['id']."</div>";
-						echo "<div class=\"col-lg-3\">".$row['username']."</div>";
-						echo "<div class=\"col-lg-5\">".$row['email']."</div>";
-						echo "<div class=\"col-lg-3\">".$row['name']."</div>";
+						echo "<div class=\"col-lg-1\"><strong> ID </strong></div>";
+						echo "<div class=\"col-lg-3\"><strong> Username </strong></div>";
+						echo "<div class=\"col-lg-5\"><strong> Email </strong></div>";
+						echo "<div class=\"col-lg-3\"><strong> Status </strong></div>";
 					echo "</div>";
-				}
-			echo "</div>";
+					while($row = $stmt->fetch()){
+						echo "<div class=\"row\">";
+							echo "<div class=\"col-lg-1\">".$row['id']."</div>";
+							echo "<div class=\"col-lg-3\">".$row['username']."</div>";
+							echo "<div class=\"col-lg-5\">".$row['email']."</div>";
+							echo "<div class=\"col-lg-3\">".$row['name']."</div>";
+						echo "</div>";
+					}
+				echo "</div>";
+			} else {
+				echo "<div class=\"container\">";
+					echo "<div class=\"row\">";
+						echo "<div class=\"col-lg-1\"><strong> ID </strong></div>";
+						echo "<div class=\"col-lg-3\"><strong> Username </strong></div>";
+						echo "<div class=\"col-lg-5\"><strong> Email </strong></div>";
+						echo "<div class=\"col-lg-3\"><strong> Status </strong></div>";
+					echo "</div>";
+				echo "</div>";
+			}
 		?>
 	</body>
 </html>
