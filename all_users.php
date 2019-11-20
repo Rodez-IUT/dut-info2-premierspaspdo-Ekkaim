@@ -10,6 +10,7 @@
 		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 	</head>
 	<body>
+		<h2> ALL USERS </h1>
 		<form method="get">
 			<label>Start with letter : </label> 
 			<input type="text" id="letter" name="letter" required maxlength="20" size="10">
@@ -17,6 +18,7 @@
 			<select name="status">
 				<option value="Active account" selected>Active account</option>
 				<option value="Waiting for account validation">Waiting for account validation</option>
+				<option value="Waiting for account deletion">Waiting for account deletion</option>
 			</select>
 			<input type="submit" value="OK">
 		</form>
