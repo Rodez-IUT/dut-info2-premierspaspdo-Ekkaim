@@ -59,15 +59,17 @@
 				echo "<div class=\"row\">";
 					echo "<div class=\"col-lg-1\"><strong> ID </strong></div>";
 					echo "<div class=\"col-lg-3\"><strong> Username </strong></div>";
-					echo "<div class=\"col-lg-5\"><strong> Email </strong></div>";
+					echo "<div class=\"col-lg-4\"><strong> Email </strong></div>";
 					echo "<div class=\"col-lg-3\"><strong> Status </strong></div>";
+					echo "<div class=\"col-lg-1\"><strong></strong></div>";
 				echo "</div>";
 				while($row = $stmt->fetch()){
 					echo "<div class=\"row\">";
 						echo "<div class=\"col-lg-1\">".$row['id']."</div>";
 						echo "<div class=\"col-lg-3\">".$row['username']."</div>";
-						echo "<div class=\"col-lg-5\">".$row['email']."</div>";
-					echo "<div class=\"col-lg-3\">".$row['name']."</div>";
+						echo "<div class=\"col-lg-4\">".$row['email']."</div>";
+						echo "<div class=\"col-lg-3\">".$row['name']."</div>";
+						echo "<div class=\"col-lg-1\"></div>";
 					echo "</div>";
 				}
 			echo "</div>";
