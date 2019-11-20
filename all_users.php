@@ -45,13 +45,14 @@
 			}catch(PDOException$e){
 				throw new PDOException($e->getMessage(),(int)$e->getCode());
 			}				
-			$stmt = $pdo->query("SELECT users.id, users.username, users.email, status.name 
+			$stmt = $pdo->prepare("SELECT users.id, users.username, users.email, status.name 
 								FROM users 
 								JOIN status 
 								ON users.status_id=status.id 
-								WHERE status.name='$status' 
-								AND users.username LIKE '$lettre%' ORDER BY username");
-								
+								WHERE status.name= ?
+								AND users.username LIKE ? 
+								ORDER BY username");
+			$stmt->execute([$status,$lettre.'%']);					
 			echo "<div class=\"container\">";
 				echo "<div class=\"row\">";
 					echo "<div class=\"col-lg-1\"><strong> ID </strong></div>";
@@ -65,7 +66,7 @@
 						echo "<div class=\"col-lg-3\">".$row['username']."</div>";
 						echo "<div class=\"col-lg-5\">".$row['email']."</div>";
 					echo "<div class=\"col-lg-3\">".$row['name']."</div>";
-					echo "</div>"
+					echo "</div>";
 				}
 			echo "</div>";
 		?>
